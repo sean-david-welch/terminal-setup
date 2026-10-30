@@ -1,0 +1,25 @@
+// Project tasks. Run via `task: spawn` (ctrl-cmd-m) or the keymap binding.
+[
+  {
+    // PyCharm external tool "ruff": ruff check on current file
+    "label": "ruff",
+    "command": "/opt/homebrew/bin/uvx",
+    "args": ["ruff@0.15.16", "check", "$ZED_FILE"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "always",
+    "hide": "never"
+  },
+  {
+    // PyCharm external tool "mypy": mypy on current file
+    "label": "mypy",
+    "command": "/opt/homebrew/bin/uvx",
+    "args": ["mypy@1.18.2", "$ZED_FILE", "--python-version", "3.12"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "always",
+    "hide": "never"
+  }
+]

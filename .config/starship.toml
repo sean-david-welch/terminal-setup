@@ -1,0 +1,77 @@
+"$schema" = "https://starship.rs/config-schema.json"
+
+add_newline = false
+command_timeout = 1500
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$golang\
+$elixir\
+$terraform\
+$aws\
+$docker_context\
+$cmd_duration\
+$character"""
+
+[directory]
+style = "bold cyan"
+truncation_length = 3
+truncate_to_repo = true
+read_only = " 󰌾"
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+format = "[$symbol$branch(:$remote_branch)]($style) "
+
+[git_status]
+style = "magenta"
+format = '([\[$all_status$ahead_behind\]]($style) )'
+conflicted = "="
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?${count}"
+stashed = "\\$${count}"
+modified = "!${count}"
+staged = "+${count}"
+renamed = "»${count}"
+deleted = "✘${count}"
+
+[golang]
+symbol = " "
+style = "cyan"
+format = "[$symbol($version )]($style)"
+
+[elixir]
+symbol = " "
+style = "purple"
+format = '[$symbol($version \(OTP $otp_version\) )]($style)'
+
+[terraform]
+symbol = "󱁢 "
+style = "bold 105"
+format = "[$symbol$workspace]($style) "
+
+[aws]
+symbol = "  "
+style = "bold yellow"
+format = '[$symbol($profile )(\($region\) )]($style)'
+
+[docker_context]
+symbol = " "
+style = "blue"
+format = "[$symbol$context]($style) "
+only_with_files = true
+
+[cmd_duration]
+min_time = 2000
+style = "dimmed yellow"
+format = "[ $duration]($style) "
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"

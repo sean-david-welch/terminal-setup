@@ -1,0 +1,31 @@
+{
+  "providers": {
+    "foundry-anthropic": {
+      "baseUrl": "https://YOUR-GATEWAY.example.com/anthropic",
+      "api": "anthropic-messages",
+      "apiKey": "unused",
+      "headers": { "api-key": "$GATEWAY_API_KEY" },
+      "models": [
+        { "id": "claude-sonnet-5-5", "name": "Claude Sonnet 5.5 (Foundry)", "reasoning": true, "compat": { "forceAdaptiveThinking": true }, "contextWindow": 256000, "maxTokens": 32000, "input": ["text", "image"], "cost": { "input": 2.0, "output": 10.0, "cacheRead": 0.1, "cacheWrite": 2.5 } },
+        { "id": "claude-opus-5-5", "name": "Claude Opus 5.5 (Foundry)", "reasoning": true, "compat": { "forceAdaptiveThinking": true }, "contextWindow": 256000, "maxTokens": 32000, "input": ["text", "image"], "cost": { "input": 4.0, "output": 20.0, "cacheRead": 0.2, "cacheWrite": 5.0 } }
+      ]
+    },
+    "foundry-openai": {
+      "baseUrl": "https://YOUR-GATEWAY.example.com/openai/v1",
+      "api": "openai-completions",
+      "compat": {
+        "supportsReasoningEffort": false,
+        "sendSessionAffinityHeaders": true,
+        "supportsLongCacheRetention": true
+      },
+      "apiKey": "unused",
+      "headers": { "api-key": "$GATEWAY_API_KEY" },
+      "models": [
+        { "id": "DeepSeek-V4-Pro", "name": "DeepSeek V4 Pro (Foundry)", "reasoning": true, "thinkingLevelMap": { "minimal": null, "low": null, "medium": null, "high": "high", "xhigh": null, "max": "max" }, "compat": { "supportsReasoningEffort": true, "cacheControlFormat": "anthropic" }, "contextWindow": 256000, "maxTokens": 32000, "input": ["text"], "cost": { "input": 1.74, "output": 3.48, "cacheRead": 0.145, "cacheWrite": 0 } },
+        { "id": "DeepSeek-V4-Flash", "name": "DeepSeek V4 Flash (Foundry)", "reasoning": true, "thinkingLevelMap": { "minimal": null, "low": "low", "medium": null, "high": "high", "xhigh": null, "max": "max" }, "compat": { "supportsReasoningEffort": true, "cacheControlFormat": "anthropic" }, "contextWindow": 256000, "maxTokens": 32000, "input": ["text"], "cost": { "input": 0.19, "output": 0.51, "cacheRead": 0.028, "cacheWrite": 0 } },
+        { "id": "gpt-6-luna", "name": "GPT-6 Luna (Foundry)", "api": "openai-responses", "reasoning": true, "thinkingLevelMap": { "off": "none", "minimal": null, "low": "low", "medium": "medium", "high": "high", "xhigh": "xhigh", "max": "max" }, "compat": { "supportsReasoningEffort": true }, "contextWindow": 256000, "maxTokens": 32000, "input": ["text", "image"], "cost": { "input": 0.1, "output": 0.5, "cacheRead": 0.01, "cacheWrite": 0 } },
+        { "id": "gpt-6.1-sol", "name": "GPT-6.1 Sol (Foundry)", "api": "openai-responses", "reasoning": true, "thinkingLevelMap": { "off": "none", "minimal": null, "low": "low", "medium": "medium", "high": "high", "xhigh": "xhigh", "max": "max" }, "compat": { "supportsReasoningEffort": true }, "contextWindow": 256000, "maxTokens": 32000, "input": ["text", "image"], "cost": { "input": 2.0, "output": 10.0, "cacheRead": 0.2, "cacheWrite": 0 } }
+      ]
+    }
+  }
+}

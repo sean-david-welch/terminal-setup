@@ -1,0 +1,187 @@
+// Zed keymap - Translated from PyCharm VSCode-style keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // ActivateAIAssistantToolWindow: shift+cmd+a
+      "shift-cmd-a": "workspace::ToggleRightDock",
+
+      // File explorer toggle (open/close regardless of focus)
+      "shift-cmd-e": "workspace::ToggleLeftDock",
+
+      // ActivateDebugToolWindow: shift+cmd+d
+      "shift-cmd-d": "diagnostics::Deploy",
+
+      // ActivateMergeRequestsToolWindow: shift+cmd+g (Git)
+      "shift-cmd-g": "project_panel::ToggleFocus",
+
+      // Git.CompareWithBranch: shift+ctrl+c (branch diff vs default branch)
+      "shift-ctrl-c": "git::BranchDiff",
+
+      // Thread sidebar: open/close (also fires when focus is inside the sidebar)
+      "shift-cmd-j": "multi_workspace::ToggleWorkspaceSidebar",
+
+      // NextTab: shift+cmd+]
+      "shift-cmd-]": "pane::ActivateNextItem",
+
+      // PreviousTab: shift+cmd+[
+      "shift-cmd-[": "pane::ActivatePreviousItem",
+
+      // Vcs.Push: alt+p
+      "alt-p": "git::Push",
+
+      // Open Git panel: cmd+0
+      "cmd-0": "git_panel::Toggle",
+
+      // Open file diff: shift+cmd+c
+      "shift-alt-c": "git::OpenFileDiff",
+
+      // SearchEverywhere: shift+ctrl+o
+      "shift-ctrl-o": "command_palette::Toggle",
+
+      // Go to class/symbol, project-wide
+      "cmd-t": "project_symbols::Toggle",
+
+      // Go to symbol, current file only
+      "shift-cmd-o": "outline::Toggle",
+
+      // ActivateTerminalToolWindow: ctrl+`
+      "ctrl-`": "workspace::ToggleBottomDock"
+
+      // Stop (PyCharm shift+ctrl+.): no Zed action exists yet, skipped
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      // RenameElement: shift+cmd+r
+      "shift-cmd-r": "editor::Rename",
+
+      // SelectAllOccurrences: ctrl+cmd+g
+      "ctrl-cmd-g": "editor::SelectAllMatches",
+
+      // Run: ctrl+cmd+m
+      "ctrl-cmd-m": "task::Spawn",
+
+      // Rerun: shift+cmd+,
+      "shift-cmd-,": "task::Rerun",
+
+      // External tool ruff: alt+,
+      "alt-,": ["task::Spawn", { "task_name": "ruff" }],
+
+      // External tool mypy: alt+/
+      "alt-/":["task::Spawn", { "task_name": "mypy" }],
+
+      // Git.CompareWithBranch: shift+ctrl+c (Editor context needs it too, or it shadows Workspace)
+      "shift-ctrl-c": "git::BranchDiff",
+
+      // FindPrevious: shift+f3 or shift+cmd+f5
+      "shift-f3": "search::SelectPreviousMatch",
+      "shift-cmd-f5": "search::SelectPreviousMatch",
+
+      // Open Git panel: cmd+0 (overrides default ResetBufferFontSize)
+      "cmd-0": "git_panel::Toggle",
+
+      // NewClass: shift+ctrl+n
+      "shift-ctrl-n": "project_panel::NewFile",
+
+      // Kotlin.NewFile / NewDir: shift+cmd+n or alt+n
+      "shift-cmd-n": "project_panel::NewFile",
+      "alt-n": "project_panel::NewDirectory",
+
+      // Back: shift+ctrl+[ or ctrl+[
+      "shift-ctrl-[": "pane::GoBack",
+      "ctrl-[": "pane::GoBack",
+
+      // Forward: shift+ctrl+] or ctrl+]
+      "shift-ctrl-]": "pane::GoForward",
+      "ctrl-]": "pane::GoForward"
+    }
+  },
+  {
+    // cmd+0 toggles the git panel open from anywhere, but while focus is inside it
+    // (including its commit message editor) it should close it.
+    "context": "GitPanel || GitPanel > Editor",
+    "bindings": {
+      "cmd-0": "git_panel::Close",
+      // Commit staged changes from the git panel / commit message editor
+      "shift-cmd-.": "git::Commit"
+    }
+  },
+  {
+    // cmd+? focuses the agent panel; pressing it again from inside closes the right dock
+    "context": "AgentPanel || AgentPanel > Editor",
+    "bindings": {
+      "cmd-?": "workspace::ToggleRightDock"
+    }
+  },
+  {
+    // shift+cmd+c (Zed default) focuses the collab/channels panel; pressing it again
+    // from inside closes the left dock
+    "context": "CollabPanel || CollabPanel > Editor",
+    "bindings": {
+      "shift-cmd-c": "workspace::ToggleLeftDock"
+    }
+  },
+  {
+    // shift+ctrl+c opens the branch diff tab; pressing it again inside closes that tab
+    "context": "ProjectDiff || ProjectDiff > Editor",
+    "bindings": {
+      "shift-ctrl-c": "pane::CloseActiveItem"
+    }
+  },
+  {
+    // shift+cmd+d opens the diagnostics tab; pressing it again inside closes that tab
+    "context": "ProjectDiagnosticsEditor || ProjectDiagnosticsEditor > Editor",
+    "bindings": {
+      "shift-cmd-d": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      // fold the import block: top of file through the first 3 blank-line-separated groups
+      // (stdlib / third-party / local). Zed has no import-fold action; add or remove a
+      // SelectToEndOfParagraph line to change how many groups get folded.
+      "space z i": [
+        "action::Sequence",
+        [
+          "editor::MoveToBeginning",
+          "editor::SelectToEndOfParagraph",
+          "editor::SelectToEndOfParagraph",
+          "editor::SelectToEndOfParagraph",
+          "editor::FoldSelectedRanges",
+          "vim::SwitchToNormalMode"
+        ]
+      ],
+      // unfold everything in the file
+      "space z o": "editor::UnfoldAll"
+    }
+  },
+  {
+    "context": "ProjectPanel",
+    "bindings": {
+      // NewDir: alt+n
+      "alt-n": "project_panel::NewDirectory",
+
+      // shift+cmd+g focuses the project panel; pressing it again inside closes the dock
+      "shift-cmd-g": "workspace::ToggleLeftDock"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      // Terminal.NewTab: shift+cmd+t
+      "shift-cmd-t": "workspace::NewTerminal",
+
+      // ConsoleView.ClearAll: shift+ctrl+/
+      "shift-ctrl-/": "terminal::Clear"
+    }
+  }
+]

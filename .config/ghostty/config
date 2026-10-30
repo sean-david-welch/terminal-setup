@@ -1,0 +1,59 @@
+# Ghostty config
+
+# Colors: custom themes live in ./themes, switched with macOS appearance.
+# Ghostty has no runtime theme toggle like the wezterm Ctrl-Shift-L event.
+theme = light:coolday,dark:coolnight
+
+# Font
+font-family = JetBrainsMono NF
+font-size = 16
+
+# Window
+window-width = 240
+window-height = 60
+window-padding-x = 15
+window-padding-y = 15
+# Closest to wezterm "RESIZE" while keeping a tab bar.
+# Use "hidden" to drop the title bar and tabs entirely.
+macos-titlebar-style = transparent
+background-opacity = 0.90
+background-blur = 20
+
+# Steady cursor; no-cursor stops shell integration forcing a blinking bar at the prompt
+cursor-style-blink = false
+shell-integration-features = no-cursor
+
+# Left Option composes characters, right Option acts as Alt
+macos-option-as-alt = right
+
+# Copy selected text straight to the system clipboard
+copy-on-select = clipboard
+
+# Keybindings
+# Alt-3 sends '#'
+keybind = alt+3=text:#
+# Left Option composes, so send word-editing escapes explicitly
+keybind = alt+backspace=text:\x1b\x7f
+keybind = alt+left=esc:b
+keybind = alt+right=esc:f
+# Clear scrollback and screen (wezterm Ctrl-K / Ctrl-Shift-K)
+keybind = ctrl+k=clear_screen
+keybind = ctrl+shift+k=clear_screen
+
+# Split navigation: ctrl+a then hjkl (tmux-style leader)
+
+keybind = ctrl+a>h=goto_split:left
+keybind = ctrl+a>j=goto_split:down
+keybind = ctrl+a>k=goto_split:up
+keybind = ctrl+a>l=goto_split:right
+
+# Copy last command's output: dump scrollback + screen to a temp file (path goes to
+# clipboard), then send a key the zsh copy-last-output widget is bound to.
+# Needs a matching zsh widget bound to \x1b[9999~ (not included here); without it,
+# only the screen dump happens. Remove these two lines if you don't want it.
+keybind = cmd+shift+x=write_screen_file:copy
+keybind = chain=text:\x1b[9999~
+
+# Quick terminal: dropdown from top, toggled globally (needs Accessibility)
+keybind = global:cmd+alt+t=toggle_quick_terminal
+quick-terminal-position = top

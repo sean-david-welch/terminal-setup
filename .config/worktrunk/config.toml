@@ -1,0 +1,66 @@
+# Example per-project hook. Replace the key below with your own remote path (host/org/repo).
+# pre-start bootstraps a fresh worktree: copies .env, pins Python 3.12, links Zed settings, creates a uv venv.
+[projects."git.example.com/your-org/your-python-project"]
+pre-start = '''
+set -eu
+
+if [ -e .venv ] || [ -L .venv ]; then
+  printf '%s\n' 'Refusing to replace or reuse an existing .venv.' >&2
+  exit 1
+fi
+
+if [ -e .python-version ] || [ -L .python-version ]; then
+  if [ ! -f .python-version ]; then
+    printf '%s\n' 'Refusing to use a non-file .python-version.' >&2
+    exit 1
+  fi
+  pin=$(cat .python-version)
+  case "$pin" in
+    3.12|3.12.*) ;;
+    *) printf '%s\n' 'Refusing to overwrite an existing non-Python-3.12 pin.' >&2; exit 1 ;;
+  esac
+fi
+
+if [ -e .env ] || [ -L .env ]; then
+  if [ ! -f .env ]; then
+    printf '%s\n' 'Refusing to use an existing non-file .env.' >&2
+    exit 1
+  fi
+else
+  primary_env="{{ primary_worktree_path }}/.env"
+  if [ ! -f "$primary_env" ]; then
+    printf '%s\n' 'Primary worktree .env is missing; refusing to bootstrap.' >&2
+    exit 1
+  fi
+fi
+
+if [ ! -f requirements-dev.txt ]; then
+  printf '%s\n' 'requirements-dev.txt is missing; refusing to bootstrap.' >&2
+  exit 1
+fi
+if ! command -v uv >/dev/null 2>&1; then
+  printf '%s\n' 'uv is unavailable; refusing to bootstrap.' >&2
+  exit 1
+fi
+
+if [ ! -e .env ] && [ ! -L .env ]; then
+  cp -n "{{ primary_worktree_path }}/.env" .env
+  if [ ! -f .env ]; then
+    printf '%s\n' 'Could not create .env without overwriting an existing path.' >&2
+    exit 1
+  fi
+fi
+
+if [ ! -e .python-version ] && [ ! -L .python-version ]; then
+  (set -C; printf '3.12\n' > .python-version)
+fi
+
+primary_zed="{{ primary_worktree_path }}/.zed/settings.json"
+if [ -f "$primary_zed" ] && [ ! -e .zed/settings.json ] && [ ! -L .zed/settings.json ]; then
+  mkdir -p .zed
+  ln -s "$primary_zed" .zed/settings.json
+fi
+
+uv venv --python 3.12 .venv
+uv pip install --python .venv/bin/python -r requirements-dev.txt
+'''

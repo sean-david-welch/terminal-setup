@@ -1,0 +1,209 @@
+{
+  "inline_code_actions": false,
+  "disable_ai": true,
+  "proxy": "",
+  "cli_default_open_behavior": "existing_window",
+  "debugger": {
+    "button": false
+  },
+  "terminal": {
+    "button": false
+  },
+  "project_panel": {
+    "dock": "left",
+    "hide_hidden": true,
+    "hide_gitignore": true,
+    "hide_root": true
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "button": false,
+    "dock": "left"
+  },
+  "git_panel": {
+    "dock": "left"
+  },
+  "edit_predictions": {
+    "provider": "zed",
+    "mode": "subtle",
+    "copilot": {
+      "proxy": null,
+      "proxy_no_verify": null
+    }
+  },
+  "icon_theme": "Zed (Default)",
+  "base_keymap": "VSCode",
+  "vim_mode": true,
+  "ui_font_size": 16,
+  "buffer_font_size": 14,
+  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "current_line_highlight": "all",
+  "vertical_scroll_margin": 8,
+  "relative_line_numbers": "disabled",
+  "format_on_save": "off",
+  "inlay_hints": {
+    "enabled": false
+  },
+  "indent_guides": {
+    "enabled": true,
+    "line_width": 1,
+    "coloring": "fixed"
+  },
+  "vim": {
+    "cursor_shape": {
+      "normal": "block",
+      "insert": "bar",
+      "visual": "underline"
+    }
+  },
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "One Dark"
+  },
+  // PyCharm "One Dark" palette (same as nvim onedark)
+  "theme_overrides": {
+    "One Dark": {
+      "background": "#21252b",
+      "editor.background": "#282c34",
+      "editor.gutter.background": "#282c34",
+      "editor.foreground": "#abb2bf",
+      "editor.active_line.background": "#2c313c",
+      "editor.line_number": "#636d83",
+      "editor.active_line_number": "#abb2bf",
+      "editor.indent_guide": "#3b4048",
+      "editor.indent_guide_active": "#4b5263",
+      "editor.document_highlight.read_background": "#3e445166",
+      "panel.background": "#21252b",
+      "tab_bar.background": "#21252b",
+      "tab.inactive_background": "#21252b",
+      "tab.active_background": "#282c34",
+      "toolbar.background": "#282c34",
+      "status_bar.background": "#21252b",
+      "title_bar.background": "#21252b",
+      "terminal.background": "#282c34",
+      "element.selected": "#3e4451",
+      "border": "#181a1f",
+      "syntax": {
+        "keyword": { "color": "#c678dd" },
+        "function": { "color": "#61afef" },
+        "function.method": { "color": "#61afef" },
+        "string": { "color": "#98c379" },
+        "string.escape": { "color": "#56b6c2" },
+        "string.regex": { "color": "#56b6c2" },
+        "string.special": { "color": "#56b6c2" },
+        "type": { "color": "#e5c07b" },
+        "constructor": { "color": "#e5c07b" },
+        "attribute": { "color": "#e5c07b" },
+        "number": { "color": "#d19a66" },
+        "constant": { "color": "#d19a66" },
+        "boolean": { "color": "#d19a66" },
+        "operator": { "color": "#56b6c2" },
+        "variable": { "color": "#abb2bf" },
+        "variable.special": { "color": "#e06c75" },
+        "property": { "color": "#e06c75" },
+        "tag": { "color": "#e06c75" },
+        "punctuation": { "color": "#abb2bf" },
+        "punctuation.bracket": { "color": "#abb2bf" },
+        "punctuation.delimiter": { "color": "#abb2bf" },
+        "comment": { "color": "#7f848e", "font_style": "italic" },
+        "comment.doc": { "color": "#7f848e", "font_style": "italic" }
+      }
+    }
+  },
+  "auto_install_extensions": {
+    "django": true
+  },
+  "file_types": {
+    "HTML": ["heex"],
+    "Django": ["**/templates/**/*.html"]
+  },
+  "languages": {
+    "Elixir": {
+      "language_servers": ["elixir-ls"]
+    },
+    "HEEx": {
+      "language_servers": ["elixir-ls"]
+    },
+    "HTML": {
+      "format_on_save": "off"
+    },
+    "Django": {
+      // the django extension's django-language-server (djls)
+      "language_servers": ["django-language-server", "..."]
+    },
+    "Python": {
+      // ty (bundled with Zed) for navigation/completion, ruff for lint + format
+      "language_servers": ["ty", "ruff", "!basedpyright", "!pylsp", "!pyright"],
+      "format_on_save": "off",
+      "formatter": {
+        "language_server": { "name": "ruff" }
+      }
+    }
+  },
+  "lsp": {
+    "ruff": {
+      "binary": {
+        "path": "/opt/homebrew/bin/uvx",
+        "arguments": ["ruff@0.15.16", "server"]
+      }
+    },
+    "esbonio": {
+      "binary": {
+        "path": "/opt/homebrew/bin/esbonio",
+        "arguments": ["server"]
+      }
+    },
+    "ty": {
+      // flat: ty rejects these as initialization_options and rejects them nested under "ty"
+      "settings": {
+        "diagnosticMode": "openFilesOnly",
+        "configuration": {
+          // django dynamics (ORM attrs, stubs generics) that ty can't model; tune to your project
+          "rules": {
+            "unresolved-attribute": "ignore",
+            "not-subscriptable": "ignore",
+            "invalid-type-form": "ignore",
+            "invalid-argument-type": "ignore",
+            "invalid-assignment": "ignore",
+            "invalid-return-type": "ignore",
+            "no-matching-overload": "ignore",
+            "invalid-attribute-override": "ignore",
+            "invalid-method-override": "ignore",
+            "unsupported-operator": "ignore",
+            "inconsistent-mro": "ignore",
+            "not-iterable": "ignore",
+            "missing-typed-dict-key": "ignore",
+            "invalid-type-arguments": "ignore",
+            "invalid-mutable-override": "ignore",
+            "invalid-declaration": "ignore",
+            "invalid-attribute-access": "ignore",
+            "missing-argument": "ignore",
+            "too-many-positional-arguments": "ignore",
+            "possibly-missing-submodule": "ignore"
+          },
+          "environment": {
+            "python": "./.venv"
+          }
+        }
+      }
+    },
+    "basedpyright": {
+      "settings": {
+        "basedpyright.analysis": {
+          "typeCheckingMode": "off",
+          "diagnosticMode": "openFilesOnly",
+          "autoImportCompletions": true,
+          "useLibraryCodeForTypes": true,
+          // setting exclude replaces pyright's defaults, so they're restated here; .venv is covered by **/.*
+          "exclude": ["**/node_modules", "**/__pycache__", "**/.*", "**/staticfiles", "**/dist", "**/build", "**/htmlcov", "**/site-packages"]
+        },
+        "basedpyright": {
+          "disableOrganizeImports": true
+        }
+      }
+    }
+  }
+}

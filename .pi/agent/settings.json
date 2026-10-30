@@ -1,0 +1,78 @@
+{
+  "lastChangelogVersion": "1.4.0",
+  "defaultProvider": "foundry-openai",
+  "defaultModel": "gpt-6.1-sol",
+  "defaultThinkingLevel": "high",
+  "modelThinkingLevels": {
+    "foundry-anthropic/claude-opus-5-5": "medium",
+    "foundry-openai/gpt-6.1-sol": "medium",
+    "foundry-anthropic/claude-sonnet-5-5": "medium"
+  },
+  "theme": "dark",
+  "quietStartup": true,
+  "shellCommandPrefix": "shopt -s expand_aliases\neval \"$(grep '^alias ' ~/.zshrc)\"",
+  "skills": [
+    "~/.agents/skills"
+  ],
+  "packages": [
+    "npm:pi-web-access",
+    "npm:pi-zentui",
+    "npm:pi-ast-grep",
+    "npm:pi-show-diffs",
+    "npm:pi-subagents"
+  ],
+  "enabledModels": [
+    "foundry-anthropic/claude-sonnet-5-5",
+    "foundry-anthropic/claude-opus-5-5",
+    "foundry-openai/gpt-6.1-sol",
+    "foundry-openai/gpt-6-luna",
+    "foundry-openai/DeepSeek-V4-Flash",
+    "foundry-openai/DeepSeek-V4-Pro"
+  ],
+  "subagents": {
+    "agentOverrides": {
+      "scout": {
+        "model": "foundry-openai/DeepSeek-V4-Flash",
+        "thinking": "low"
+      },
+      "worker": {
+        "model": "foundry-openai/DeepSeek-V4-Flash",
+        "thinking": "high"
+      },
+      "reviewer": {
+        "model": "foundry-anthropic/claude-opus-5-5"
+      },
+      "oracle": {
+        "model": "foundry-anthropic/claude-opus-5-5",
+        "thinking": "high"
+      },
+      "researcher": {
+        "disabled": true
+      },
+      "delegate": {
+        "disabled": true
+      },
+      "evidence-auditor": {
+        "disabled": true
+      },
+      "claude-code": {
+        "disabled": true
+      },
+      "claude-code-writer": {
+        "disabled": true
+      },
+      "codex-exec": {
+        "disabled": true
+      },
+      "codex-exec-writer": {
+        "disabled": true
+      },
+      "cursor-agent": {
+        "disabled": true
+      },
+      "cursor-agent-writer": {
+        "disabled": true
+      }
+    }
+  }
+}
